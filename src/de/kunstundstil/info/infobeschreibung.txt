@@ -1,0 +1,72 @@
+1. Mein Proekt wird Drukmaterialien haben.
+2. Produktion wird sein
+    das T-Schirts
+    das Hemd
+    der Pullower
+3. Bilder können wie heruntergeladen werden sondern auch von uns (Firma)
+4. Eder Produkt hat
+    Prise
+    Artikel
+    Groß
+    Farbe
+    Bild
+    Verfügbarkeit im Geschäft
+5. Klient wird solche Parametr haben
+    Name
+    id
+    Telefonnummer
+    adresse
+    Beschtrlung
+6. Gescheft wird Lager haben mit
+    Zähl des Produkt
+    Beschtelung - Produkt
+    Absage + Produkt
+    Data der Bestelung, wir können hier "wenn" realisieren.
+------------------------------------------------------------------------
+1. Bilder können wie heruntergeladen werden sondern auch von uns (Firma)
+    und anzeigen auf dem Produkt
+
+Heute 03.11.
+    1.1. Heute anzeige ich einen weisses T-Schirt auf einem Fenster
+
+Heute 04.11.
+    1.2.  möchte ich Bildausrichtung auf dem T-Shirt realisieren
+    1.2.  Proekt strukturieren
+
+Heute 05.11.
+    1.3   Grenzen festlegen
+    1.4   Der Groß vom Bild verendern
+    1.5   Laufen des Bild realisieren
+    1.5.  Proekt strukturieren
+
+Heute 06.11.
+    1.6   Farbe des Produkt waehlen.
+    1.7   Der Produkt auswaehlen: T-Schirt oder Pullower
+    1.8.  Proekt strukturieren
+------------------------------------------------------------
+Heute 10.11.
+    1.9. Das bild heruntergeladen kann
+    1.10. Print Text
+Heute 10.11.
+    2. Auf einem produkt mehr foto realisieren
+ ------------------------------------
+ Ich möchte 3d Tasse realisieren
+
+  2. Schaltfläche zum Senden der Datei mit den Bestelldaten
+    1.5   Установить форматы для печати
+            если картинка А4 формата, то она может менять только напавление по У
+            маленькая картинка А5 может занимать разные позиции в пределах рямоугольника
+
+
+
+
+разные форматы фото
+редактор цвета
+добавить размытие
+
+обеденить две фотки сделать одну хорошую
+
+
+Dazu ich benutze:
+JavaFX
+(Shape)
