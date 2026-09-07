@@ -29,9 +29,6 @@ public class ButtonFarbe {
     public ButtonFarbe(Group backgroundGroup, AtomicReference<ProductGenerator> hauptBody){
 
         this.hauptBody = hauptBody;
-//        public ButtonFarbe(Group backgroundGroup){
-
-
 
         Image gelberKreis = new Image("file:resources/image/farbe/Farbe_" + Farbe.GELB.getFarbe() + ".png");
         Image blauerKreis = new Image("file:resources/image/farbe/Farbe_" + Farbe.BLAU.getFarbe() + ".png");
@@ -50,7 +47,6 @@ public class ButtonFarbe {
         ));
 
         imageViewErschtellen(backgroundGroup, kreises);
-
     }
 
     /**
@@ -63,21 +59,24 @@ public class ButtonFarbe {
 
         farbenCreisePanel = new Group();
         double kreisSetX = 0;
+
         for (Image kreis : kreises) {
 
             ImageView kreisView = new ImageView(kreis);
 
-            // Seise von der Kreis
+            /* Größe des Kreises */
             kreisView.setFitWidth(40);
             kreisView.setFitHeight(40);
 
-            // Position von der Kreis
+            /* Position des Kreises */
             kreisView.setX(450 + kreisSetX);
             kreisView.setY(170);
             kreisSetX += 50;
 
+            /* Farbe auswählen */
             eineFarbeAuswaehlen(kreisView);
 
+            /* Kreis zum Farben-Panel hinzufügen */
             farbenCreisePanel.getChildren().add(kreisView);
         }
         overlayGroup.getChildren().add(farbenCreisePanel);
@@ -89,7 +88,7 @@ public class ButtonFarbe {
      * @param kreisView ImageView des Farbkreises
      */
     private void eineFarbeAuswaehlen(ImageView kreisView) {
-        // Das Bild klickbar machen
+        /* Das Bild klickbar machen */
         kreisView.setOnMouseClicked(event -> {
 
             /* Region Autor Susenne */
@@ -98,14 +97,9 @@ public class ButtonFarbe {
             String imagePfad = imageKreis.getUrl();
 
             String farbeUrl = imagePfad.substring(imagePfad.lastIndexOf("_")+1).replace(".png","");
-
-//            String[] texte = imagePfad.split("\\.");
-//            //System.out.println(Arrays.deepToString(texte));
-//            String farbString = texte[0].substring(33);
-//            System.out.println(texte[0].substring(33));
-            /* endeRegion */
-            hauptBody.get().getProdukt().setFarbe(farbeUrl);
             /* endRegion  */
+
+            hauptBody.get().getProdukt().setFarbe(farbeUrl);
         });
     }
 

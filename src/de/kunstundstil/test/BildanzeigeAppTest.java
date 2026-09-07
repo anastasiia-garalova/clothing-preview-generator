@@ -1,5 +1,6 @@
 package de.kunstundstil.test;
 
+import de.kunstundstil.polygons.PolygonZeichner;
 import de.kunstundstil.produkte.ProductGenerator;
 import de.kunstundstil.fenster.Header;
 import de.kunstundstil.print.BildSpeicherung;
@@ -13,6 +14,7 @@ import javafx.application.Application;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -29,142 +31,39 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Das Projekt demonstriert ein weißen TßSchirt in einem Fenster
- * Unser Stage wird auch icon haben
- * Realisiere ich Bildausrichtung
- * Ich möchte das Bild hinter der Rechtange nicht gesehen wird. Es kann mir .setClip ereichen helfen
- *
- * 🇷🇺 AtomicReference<Body> hauptBody используется для хранения ссылки на текущий объект Body.
- * Это позволяет динамически менять продукт (например, футболку на пуловер) во время работы программы,
- *и при этом все остальные классы (например, кнопки выбора цвета) всегда обращаются к актуальному Body.
- * Таким образом, мы избегаем проблем со "старыми" ссылками и обеспечиваем корректную работу интерфейса.
- *
- * 🇩🇪 Die Variable AtomicReference<Body> hauptBody dient dazu, eine Referenz auf das aktuelle Body-Objekt zu speichern.
- * Dadurch kann das Produkt (z. B. T-S
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- * hirt oder Pullover) während der Laufzeit dynamisch gewechselt werden,
- * und andere Klassen (z. B. Farb-Buttons) greifen immer auf das aktuelle Body-Objekt zu.
- * So vermeiden wir Probleme mit veralteten Referenzen und stellen sicher, dass die Benutzeroberfläche korrekt funktioniert.
- *
- * Die Variable AtomicReference<ProductGenerator> hauptBody speichert eine Referenz auf das aktuell angezeigte Produkt (z.B. T-Shirt oder Pullover).
- *  Durch die Verwendung von AtomicReference kann die Referenz während der Laufzeit sicher ausgetauscht werden,
- *  sodass alle anderen Klassen und Bedienelemente (wie Farb-Buttons oder Größenänderungen) automatisch auf das aktuelle Produkt zugreifen,
- *  ohne dass alte Referenzen ungültig werden. Dies gewährleistet eine konsistente und dynamische Benutzeroberfläche.
- */
-/**
- * Hauptklasse der Anwendung, die die Anzeige von Produkten (T-Shirt, Pullover) demonstriert.
+ * Hauptklasse der Anwendung, die die Anzeige und Anpassung von Produkten (T-Shirt, Pullover) demonstriert.
  * <p>
- * Funktionalitäten:
+ * Das Projekt zeigt ein Produkt in einem fixierten Fenster. Die Anwendung unterstützt das Laden eines Icons
+ * für das Stage sowie eine dynamische Bildausrichtung. Mithilfe von {@code .setClip()} wird sichergestellt,
+ * dass das auf dem Produkt platzierte Bild nicht über die Grenzen des vordefinierten Rechtecks hinausragt.
+ * </p>
+ *
+ * <p><b>Entwurfsentscheidung (AtomicReference):</b></p>
+ * <ul>
+ *     <li>
+ *         <b>🇷🇺</b> {@code AtomicReference<ProductGenerator> hauptBody} используется для хранения ссылки на текущий объект продукта.
+ *         Это позволяет динамически менять продукт (например, футболку на кофту) во время работы программы.
+ *         При этом все остальные элементы интерфейса (например, кнопки выбора цвета или масштабирования) всегда обращаются
+ *         к актуальному объекту. Таким образом, мы избегаем проблем с "устаревшими" ссылками и обеспечиваем корректную работу UI.
+ *     </li>
+ *     <li>
+ *         <b>🇩🇪</b> Die Variable {@code AtomicReference<ProductGenerator> hauptBody} dient dazu, eine Referenz auf das aktuell
+ *         angezeigte Produkt zu speichern. Dadurch kann das Produkt (z. B. T-Shirt oder Pullover) während der Laufzeit
+ *         dynamisch gewechselt werden. Alle anderen UI-Komponenten (wie Farb-Buttons oder Größenänderungen) greifen
+ *         dadurch automatisch auf das aktuelle Produkt-Objekt zu, ohne dass veraltete Referenzen ungültig werden.
+ *         Dies gewährleistet eine konsistente und dynamische Benutzeroberfläche.
+ *     </li>
+ * </ul>
+ *
+ * <p><b>Funktionalitäten:</b></p>
  * <ul>
  *     <li>Erstellt das Hauptfenster mit fixierter Größe und Hintergrundfarbe</li>
- *     <li>Zeigt Header-Text an</li>
- *     <li>Lädt und zeigt Produkte (T-Shirt, Pullover) an</li>
- *     <li>Ermöglicht das Verschieben, Skalieren und Ändern der Farben des Produkts</li>
+ *     <li>Zeigt einen Header-Text an</li>
+ *     <li>Lädt und visualisiert Produkte (T-Shirt, Pullover)</li>
+ *     <li>Ermöglicht das Verschieben, Skalieren und Ändern der Produktfarben</li>
  *     <li>Unterstützt das Hochladen eines neuen Bildes auf das Produkt</li>
- *     <li>Speichert das aktuell angezeigte Produkt als PNG-Datei</li>
- *     <li>Optional: Polygon-Zeichenfunktion auf der Oberfläche</li>
+ *     <li>Speichert das aktuell generierte Produkt als PNG-Datei</li>
+ *     <li>Bietet eine optionale Polygon-Zeichenfunktion auf der Benutzeroberfläche</li>
  * </ul>
  *
  * @see de.kunstundstil.produkte.ProductGenerator
@@ -178,27 +77,22 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class BildanzeigeAppTest extends Application {
 
-
-    //private final List<Double> points = new ArrayList<>();
     private Polygon polygon;
     private boolean drawing = true;
 
-    private List<Double> points = new ArrayList<>();
-    private Polygon currentPolygon;
-    private Pane canvas;
-
-    private Group farbenCreisePanel;
+    private final List<Double> points = new ArrayList<>();
+    private final Group farbenKreisePanel = new Group();
 
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        /* Haupt Gruppe */
+        /* Hauptgruppe */
         Group root = new Group ();
         Scene scene = new Scene(root, 800, 600, Color.LIGHTBLUE);
 
         Image icon = new Image("file:resources/image/icon.png");
 
-        /* Header*/
+        /* Header */
         Group headerGroup = new Group();
 
         Header header = new Header();
@@ -207,17 +101,18 @@ public class BildanzeigeAppTest extends Application {
         /* Linke Seite */
         Group backgroundGroup = new Group();
 
-        /* Bilder Auf dem produkt */
+        /* Bilder auf dem Produkt */
         Group bildAufDemProduktGroup = new Group();
 
-        /* Alle andere Objekte auf dem Fenster */
+        /* Alle anderen Objekte auf dem Fenster */
         Group overlayGroup = new Group();
 
-        /* Objekt des BildAufDemProdukt  */
+        /* Objekt des Bildes auf dem Produkt */
         BildAufDemProdukt bildAufDemProduktObjekt = new BildAufDemProdukt();
         ImageView bildAufDemProduktView = bildAufDemProduktObjekt.erstellen();
 
-        /* Pruefen welches Bild wir haben: horizontal oder vertikal, es hilft uns richtig das Bild "Clip" tun*/
+        /* Prüfen, welches Bild wir haben: horizontal oder vertikal.
+            Das hilft uns, das Bild richtig zu clippen. */
         String position;
         if(bildAufDemProduktView.getBoundsInParent().getWidth() == 140){
             position = "horizontal";
@@ -225,101 +120,138 @@ public class BildanzeigeAppTest extends Application {
             position = "vertikal";
         }
 
-        // Verwenden AtomicReference um unser Produkt aendern zu koennen
+        /* AtomicReference verwenden, um unser Produkt aendern zu koennen */
         AtomicReference<ProductGenerator> hauptBody = new AtomicReference<>(new ProductGenerator(backgroundGroup, overlayGroup,
-                bildAufDemProduktGroup, "Pullower", bildAufDemProduktView, farbenCreisePanel));
+                bildAufDemProduktGroup, "Pullower", bildAufDemProduktView, farbenKreisePanel));
 
-        // Botton mit Farbe der Produkte
+        /* Button mit der Farbe des Produkts */
         new ButtonFarbe(overlayGroup, hauptBody);
 
-
-        // Neues Bild  wird herunterladen
+        /* Neues Bild wird heruntergeladen */
         new BildHerunterladung(primaryStage, overlayGroup, bildAufDemProduktView, hauptBody);
 
-        // Schwarzer  Rechteck auf dem Produkt
+        /* Schwarzes Rechteck auf dem Produkt */
         RechteckAufDemProdukt rechteckAufDemProdukt = new RechteckAufDemProdukt();
 
-        // Вas Bild verschieben wird
+        /* Das Bild wird verschoben */
         AtomicInteger fitZahlFuerVergleichen = new AtomicInteger(140);
         bildAufDemProduktObjekt.bildLaufenWird(overlayGroup, bildAufDemProduktGroup, bildAufDemProduktView, position,
                 hauptBody.get().getRectangle(), fitZahlFuerVergleichen, rechteckAufDemProdukt);
 
-        // Button "Verkleinen" und "VeRgrösern"
+        /* Button "Verkleinern" und "Vergroessern" */
         ButtonVergroesernUndVerkleinen buttonAufDemFenster = new ButtonVergroesernUndVerkleinen();
         buttonAufDemFenster.buttonsVergroesernUndVerkleinenErstellen(overlayGroup, bildAufDemProduktView, fitZahlFuerVergleichen);
 
-        // Produkt auswaehlen, der interessiert uns
+        /* Produkt auswaehlen, das uns interessiert */
         new ButtonAuswaehlDesProdukts(backgroundGroup,  bildAufDemProduktGroup, overlayGroup, hauptBody,
-                bildAufDemProduktObjekt, bildAufDemProduktView,  position,  fitZahlFuerVergleichen, rechteckAufDemProdukt, farbenCreisePanel);
+                bildAufDemProduktObjekt, bildAufDemProduktView,  position,  fitZahlFuerVergleichen, rechteckAufDemProdukt, farbenKreisePanel);
 
-
+        /* Gruppe fuer den Snapshot */
         Group snapshotGroup = new Group();
-        // Button, um generiertes Bild speichern
+
+        /* Button, um das generierte Bild zu speichern */
         BildSpeicherung bildSpeicherung = new BildSpeicherung(root, snapshotGroup,hauptBody);
 
+        /* Zeichenfläche für Polygon */
+        Pane zeichenFlaeche = new Pane();
 
-        snapshotGroup.getChildren().addAll(backgroundGroup, bildAufDemProduktGroup);
+        zeichenFlaeche.setPrefSize(800, 600);
+        zeichenFlaeche.setMinSize(800, 600);
+        zeichenFlaeche.setMaxSize(800, 600);
 
-        root.getChildren().addAll(headerGroup, snapshotGroup, overlayGroup);
+        zeichenFlaeche.setStyle(
+                "-fx-background-color: transparent;"
+        );
 
+        /* Polygon-Zeichner erstellen */
+        PolygonZeichner polygonZeichner =
+                new PolygonZeichner(zeichenFlaeche);
 
+        /* Zeichnen am Anfang ausschalten */
+        polygonZeichner.zeichnenBeenden();
 
+        /* Button: Polygon speichern */
+        Button polygonSpeichernButton =
+                new Button("Polygon speichern");
 
+        polygonSpeichernButton.setLayoutX(185);
+        polygonSpeichernButton.setLayoutY(550);
 
-
-
-
-
-
-//        canvas = new Pane();
-//        canvas.setStyle("-fx-background-color: lightblue;");
-//
-//
-//        root.setOnMouseClicked(e -> {
-//            // ЛКМ — добавляем точку
-//            if (e.getButton() == MouseButton.PRIMARY) {
-//                points.add(e.getX());
-//                points.add(e.getY());
-//
-//                Circle dot = new Circle(e.getX(), e.getY(), 3, Color.DARKRED);
-//                canvas.getChildren().add(dot);
-//
-//                if (currentPolygon == null) {
-//                    currentPolygon = new Polygon();
-//                    currentPolygon.setStroke(Color.BLACK);
-//                    currentPolygon.setStrokeWidth(2);
-//                    currentPolygon.setFill(Color.color(Math.random(), Math.random(), Math.random(), 0.5));
-//                    canvas.getChildren().add(currentPolygon);
-//                }
-//
-//                currentPolygon.getPoints().setAll(points);
-//
-//                // ПКМ — если двойной клик, завершаем фигуру
-//            } else if (e.getButton() == MouseButton.SECONDARY && e.getClickCount() == 2) {
-//                if (currentPolygon != null && points.size() > 4) {
-//                    savePolygon(currentPolygon);
-//                    System.out.println("✅ Полигон сохранён как SVG");
-//                }
-//                currentPolygon = null;
-//                points.clear();
-//            }
-//        });
+        /* Speichern-Button am Anfang ausblenden */
+        polygonSpeichernButton.setVisible(false);
 
 
+        /* Button: Polygon zeichnen / Zeichnen beenden */
+        Button polygonButton =
+                new Button("Polygon zeichnen");
+
+        polygonButton.setLayoutX(20);
+        polygonButton.setLayoutY(550);
+
+        polygonButton.setOnAction(e -> {
+
+            if (polygonZeichner.istZeichenmodusAktiv()) {
+
+                // Zeichnen beenden
+                polygonZeichner.polygonBeenden();
+
+                polygonButton.setText(
+                        "Polygon zeichnen"
+                );
+                polygonSpeichernButton.setVisible(false);
+
+            } else {
+
+                // Zeichnen starten
+                polygonZeichner.zeichnenStarten();
+
+                polygonButton.setText(
+                        "Zeichnen beenden"
+                );
+                polygonSpeichernButton.setVisible(true);
+            }
+        });
 
 
-//        Pane rootPane = new Pane();
-//        rootPane.setPrefSize(800, 600);
-//
-//        polygon = new Polygon();
-//        polygon.setFill(Color.color(0, 0.5, 1, 0.3)); // прозрачный синий
-//        polygon.setStroke(Color.DARKBLUE);
-//        polygon.setStrokeWidth(2);
-//
-//        root.getChildren().add(polygon);
-//
-//
-//        root.setOnMouseClicked(e -> handleMouseClick(e, rootPane));
+        /* Aktion des Buttons „Polygon speichern“ */
+        polygonSpeichernButton.setOnAction(e -> {
+
+            /* Polygon speichern */
+            polygonZeichner.polygonSpeichern();
+
+            /* Zeichnen beenden */
+            polygonZeichner.polygonBeenden();
+
+            /* Button „Polygon zeichnen“ zurücksetzen */
+            polygonButton.setText("Polygon zeichnen");
+
+            /* Speichern-Button ausblenden */
+            polygonSpeichernButton.setVisible(false);
+        });
+
+
+        /* Buttons zum Overlay hinzufügen */
+        overlayGroup.getChildren().addAll(
+                polygonButton,
+                polygonSpeichernButton
+        );
+
+
+        /* Gruppe für den Snapshot */
+        snapshotGroup.getChildren().addAll(
+                backgroundGroup,
+                bildAufDemProduktGroup
+        );
+
+
+        /* Ebenen in der richtigen Reihenfolge */
+        root.getChildren().addAll(
+                headerGroup,
+                snapshotGroup,
+                zeichenFlaeche,
+                overlayGroup
+        );
+
         primaryStage.getIcons().add(icon);
         primaryStage.setTitle("Kunst&Stil");
         /* Grosse von unser Fenster wird fix */
@@ -328,46 +260,4 @@ public class BildanzeigeAppTest extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-
-    //**************************************
-
-    private void handleMouseClick(MouseEvent e, Pane root) {
-        if (!drawing) return;
-
-        // ЛКМ — добавляем точку
-        if (e.getButton() == MouseButton.PRIMARY) {
-            double x = e.getX();
-            double y = e.getY();
-            points.add(x);
-            points.add(y);
-
-            // Рисуем маленький кружок для каждой точки
-            Circle point = new Circle(x, y, 3, Color.RED);
-            root.getChildren().add(point);
-
-            polygon.getPoints().setAll(points);
-        }
-
-        // ПКМ (дважды) — завершение
-        if (e.getButton() == MouseButton.SECONDARY && e.getClickCount() == 2) {
-            drawing = false;
-            System.out.println("✅ Полигон завершён.");
-            savePolygon(points);
-        }
-    }
-    /** Сохраняем координаты полигона в файл */
-    private void savePolygon(List<Double> pts) {
-        try (FileWriter writer = new FileWriter("polygon_pullower.txt")) {
-            for (int i = 0; i < pts.size(); i += 2) {
-                writer.write(pts.get(i) + "," + pts.get(i + 1) + "\n");
-            }
-            System.out.println("💾 Сохранено в polygon_points.txt");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-
-
 }

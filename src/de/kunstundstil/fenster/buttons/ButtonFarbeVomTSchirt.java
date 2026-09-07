@@ -13,7 +13,6 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class ButtonFarbeVomTSchirt extends ButtonFarbe{
 
-
     /**
      * Konstruktor: Initialisiert die Farbkreise für T-Shirt-Produkte.
      *

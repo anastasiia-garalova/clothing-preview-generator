@@ -54,9 +54,7 @@ public class ButtonVergroesernUndVerkleinen {
                     bildAufDemProduktView.setPreserveRatio(true);
 
                     bildAufDemProduktView.setX(bildSetX);
-
                 }
-
             }
         });
 
@@ -75,15 +73,12 @@ public class ButtonVergroesernUndVerkleinen {
                     bildAufDemProduktView.setPreserveRatio(true);
 
                     bildAufDemProduktView.setX(bildSetX);
-
                 }
             }
         });
 
-        // Buttons Vergroessen und Verkleinen in der Gruppe root auf der Fenster
+        /* Buttons zum Vergrößern und Verkleinern zur Root-Gruppe des Fensters hinzufügen */
         root.getChildren().add(vergroessen);
         root.getChildren().add(verkleinen);
     }
-
-
 }

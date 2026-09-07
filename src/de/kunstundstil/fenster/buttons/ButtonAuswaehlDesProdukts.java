@@ -19,41 +19,42 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Die Klasse ButtonAuswaehlDesProdukts stellt die Benutzeroberfläche zur Auswahl von Produkten bereit.
- * Sie erzeugt kleine Vorschau-Bilder (ImageViews) der verfügbaren Produkte und erlaubt es,
- * ein Produkt auszuwählen, woraufhin das aktuelle Produkt in der Anwendung aktualisiert wird.
+ * Die Klasse ButtonAuswaehlDesProdukts stellt die Benutzeroberfläche zur Produktauswahl bereit.
+ * Sie erzeugt kleine Vorschaubilder (ImageViews) der verfügbaren Produkte und ermöglicht es,
+ * ein Produkt auszuwählen. Anschließend wird das aktuelle Produkt in der Anwendung aktualisiert.
  */
 public class ButtonAuswaehlDesProdukts {
 
     /** Referenz auf das aktuell ausgewählte Produkt, damit andere Klassen immer auf das aktuelle Produkt zugreifen. */
-    private AtomicReference<ProductGenerator> hauptBody;
+    private final AtomicReference<ProductGenerator> hauptBody;
 
     /** Objekt, das das Bild auf dem Produkt verwaltet (verschieben, skalieren, Clip anwenden). */
-    private BildAufDemProdukt bildAufDemProduktObj;
+    private final BildAufDemProdukt bildAufDemProduktObj;
 
     /** Gruppe für den Hintergrund auf der linken Seite, z.B. Produktabbildung. */
-    private Group backgroundGroupLinks;
+    private final Group backgroundGroupLinks;
 
     /** Gruppe, in die das aktuelle Produktbild eingefügt wird. */
-    private Group bildAufDemProduktGroup;
+    private final Group bildAufDemProduktGroup;
 
     /** Overlay-Gruppe für Buttons, Auswahlpanels und andere UI-Elemente. */
-    private Group overlayGroup;
+    private final Group overlayGroup;
 
     /** Das konkrete Bild des Produkts, das angezeigt wird (ImageView). */
-    private ImageView bildAufDemProduktView;
+    private final ImageView bildAufDemProduktView;
 
     /** Orientierung des Bildes auf dem Produkt: "horizontal" oder "vertikal". */
-    private String position;
+    private final String position;
 
     /** AtomicInteger, das die Grenzwerte für die Größe des Bildes speichert (für Überprüfung und Skalierung). */
-    private AtomicInteger fitZahlFuerVergleichen;
+    private final AtomicInteger fitZahlFuerVergleichen;
 
     /** Rechteck, das die sichtbare Fläche des Produkts markiert und als Clip verwendet wird. */
     private RechteckAufDemProdukt rechteckAufDemProdukt;
 
     /** Gruppe für die Farbauswahlkreise, die beim Produkt angezeigt werden. */
-    private Group farbenCreisePanel;
+    private final Group farbenCreisePanel;
+
 
     /**
      * Konstruktor: Initialisiert alle benötigten Parameter und erstellt die Vorschau-Images der Produkte.
@@ -94,6 +95,7 @@ public class ButtonAuswaehlDesProdukts {
         imageViewErschtellen(productsImages, poligonDesProdukt);
     }
 
+
     /**
      * Erstellt die Vorschau-Bilder (ImageViews) der Produkte und positioniert sie im Auswahlpanel.
      *
@@ -102,7 +104,6 @@ public class ButtonAuswaehlDesProdukts {
      * @throws IOException bei Fehlern beim Laden der Polygondaten
      */
     private void imageViewErschtellen(List<Image> productsImages, Polygon poligonDesProdukt) throws IOException {
-
 
         Group produktAuswahlPanel  = new Group();
         produktAuswahlPanel.setLayoutX(500); // фиксированное положение панели
@@ -152,6 +153,7 @@ public class ButtonAuswaehlDesProdukts {
         overlayGroup.getChildren().add(produktAuswahlPanel );
     }
 
+
     /**
      * Definiert das Verhalten, wenn das Produkt-Polygon angeklickt wird.
      * Erstellt ein neues ProductGenerator-Objekt und aktualisiert hauptBody.
@@ -165,7 +167,7 @@ public class ButtonAuswaehlDesProdukts {
 
         miniPolygonDesProdukts.setOnMouseClicked(event -> {
 
-            ProductGenerator neuesBody = null;
+            ProductGenerator neuesBody;
             try {
                 neuesBody = new ProductGenerator(backgroundGroupLinks,
                         overlayGroup,
@@ -194,6 +196,7 @@ public class ButtonAuswaehlDesProdukts {
 
     }
 
+
     /**
      * Setzt das Verhalten für die Auswahl eines Produktes durch Klick auf die Produktvorschau.
      * Aktualisiert das aktuelle Produkt (hauptBody) und initialisiert die Interaktion mit dem Bild.
@@ -206,21 +209,24 @@ public class ButtonAuswaehlDesProdukts {
 
             overlayGroup.getChildren().remove(farbenCreisePanel);
 
-            //* ----Nehmen die Nahme des Produkts ----*/
-            // Das Objekt zurücknehmen, auf das geklickt wurde
+            /* ---- Nehmen die Name des Produkts ---- */
+
+            /* Das Objekt zurücknehmen, auf das geklickt wurde */
             ImageView clicked = (ImageView) event.getSource();
-            // Nehmen die Image, um Url zu wiessen
+
+            /* Nehmen die Image, um Url zu wissen */
             Image imageProdukt = clicked.getImage();
-            // Nehmen die Url, um  zu kennen, welhes Produkt es ist
+
+            /* Nehmen die Url, um zu kennen, welches Produkt es ist */
             String imagePfad = imageProdukt.getUrl();
 
-            // Suchen laetztee Slash
+            /* Suchen letzten Slash */
             int lastSlash = imagePfad.lastIndexOf("/"); // indei vor dem Slash
 
-            // Erste unterschtrih  nach dem letsten Slash
+            /* Ersten Unterstrich nach dem letzten Slash suchen */
             int firstUnderscoreAfterSlash = imagePfad.indexOf("_", lastSlash); // Index nah dem T_Schirt
 
-            // Schneiden die Naame des Produkts
+            /* Schneiden den Namen des Produkts aus */
             String produktName = imagePfad.substring(lastSlash + 1, firstUnderscoreAfterSlash);
 
             ProductGenerator neuerProdukt = null;
@@ -242,7 +248,6 @@ public class ButtonAuswaehlDesProdukts {
                     fitZahlFuerVergleichen,          // Grenzwerte der Größe
                     rechteckAufDemProdukt            // Rechteck mit schwaryen Grenzen
             );
-
         });
     }
 }

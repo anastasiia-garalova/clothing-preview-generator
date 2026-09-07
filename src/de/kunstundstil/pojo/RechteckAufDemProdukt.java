@@ -1,8 +1,8 @@
 package de.kunstundstil.pojo;
 
 public class RechteckAufDemProdukt {
-    private int rectangelX;
-    private int rectangelY;
+    private final int rectangelX;
+    private final int rectangelY;
     private int rectangleWidth;
     private int rectangelHeight;
 
@@ -24,25 +24,14 @@ public class RechteckAufDemProdukt {
         return rectangelX;
     }
 
-    public void setRectangelX(int rectangelX) {
-        this.rectangelX = rectangelX;
-    }
-
     public int getRectangelY() {
         return rectangelY;
-    }
-
-    public void setRectangelY(int rectangelY) {
-        this.rectangelY = rectangelY;
     }
 
     public int getRectangleWidth() {
         return rectangleWidth;
     }
 
-    public void setRectangleWidth(int rectangleWidth) {
-        this.rectangleWidth = rectangleWidth;
-    }
 
     public int getRectangelHeight() {
         return rectangelHeight;

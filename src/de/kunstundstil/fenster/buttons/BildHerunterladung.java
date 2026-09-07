@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class BildHerunterladung {
 
     /** Button, der den Bild-Upload auslöst. */
-    private Button buttonBildUnterladen;
+    private final Button buttonBildUnterladen;
 
 
     /**
@@ -33,32 +33,38 @@ public class BildHerunterladung {
      */
     public BildHerunterladung(Stage primaryStage, Group overlayGroup, ImageView bildAufDemProduktView, AtomicReference<ProductGenerator> hauptBody){
 
-        buttonBildUnterladen = new Button("Ein neues Bild unterzuladen");
+        buttonBildUnterladen = new Button("Ein neues Bild herunterladen");
 
         buttonBildUnterladen.setLayoutX(570);
         buttonBildUnterladen.setLayoutY(250);
 
-        //Wenn Button "Bild herunterladen" geklickt war
+        /* Wenn der Button „Bild herunterladen“ geklickt wird */
         buttonBildUnterladen.setOnAction(event -> {
-            // File auswaehlen
+
+            /* Datei auswählen */
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.pdf"));
+                    new FileChooser.ExtensionFilter(
+                            "Image Files", "*.png", "*.jpg", "*.jpeg", "*.pdf"
+                    )
+            );
 
             File ausgewaehlteFile = fileChooser.showOpenDialog(primaryStage);
             if(ausgewaehlteFile != null) {
+
+                /* Ausgewählte Bilddatei laden */
                 Image bildAufDemProdukt = new Image(ausgewaehlteFile.toURI().toString());
 
+                /* Bild auf dem Produkt anzeigen */
                 bildAufDemProduktView.setImage(bildAufDemProdukt);
 
             } else {
-                System.out.println("File war icht ausgewaehlt");
+                /* Keine Datei ausgewählt */
+                System.out.println("Keine Datei wurde ausgewählt");
             }
         });
 
-        // Button zur Overlay-Gruppe hinzufügen
+        /* Button zur Overlay-Gruppe hinzufügen */
         overlayGroup.getChildren().add(buttonBildUnterladen);
-
     }
-
 }

@@ -35,25 +35,27 @@ public class PolygonDesProdukt extends Pullower {
         this.fabric = fabric;
     }
 
+
     @Override
     public void produktErstellen(Group backgroundGroupLinks, Group overlayGroup, Group bildAufDemProduktGroup,
                                  Rectangle rectangle, RechteckAufDemProdukt rechteckAufDemProdukt,
                                  ImageView bildAufDemProduktView, Group farbenCreisePanel) throws IOException {
 
-
-
+        /* Größe des Produkts anpassen */
         if(imageDesProduktsView != null){
             imageDesProduktsView.setFitHeight(350);
             rectangle.setHeight(230);
             rechteckAufDemProdukt.setRectangelHeight(230);
         }
 
+        /* Polygon des Produkts erstellen */
         polygonDesProdukts = new Polygon();
-        //Polygon miniPolygonDesProdukts = new Polygon();
 
+        /* Koordinaten des Polygons aus der Datei laden */
         Path path = Paths.get("resources/polygons/pullower.txt");
         List<String> lines = Files.readAllLines(path);
 
+        /* Datei zeilenweise einlesen */
         for (String line : lines) { // die Datei wird zeilenweise eingelesen
             String[] parts = line.split(",");
             for (String part : parts) {
@@ -64,37 +66,26 @@ public class PolygonDesProdukt extends Pullower {
             }
         }
 
-
-         //Image fabric = new Image("file:resources/image/bilder/img.jpg");
         fabric = bildAufDemProduktView.getImage();
-//        System.out.println(fabric.getUrl());
 
         fabricWidth = fabric.getWidth();
         fabricHeight = fabric.getHeight();
 
         fabricPatternErstellen();
 
-//        polygonDesProdukts.setFill(Color.TRANSPARENT);
-
         polygonDesProdukts.setStroke(Color.BLACK);
         polygonDesProdukts.setStrokeWidth(2);
-
-        //backgroundGroupLinks.getChildren().clear();
-        //farbenCreisePanel.setVisible(false);
-        //overlayGroup.getChildren().clear();
-        //overlayGroup.getChildren().remove(farbenCreisePanel);
-        //overlayGroup.getChildren().remove(farbenCreisePanel);
 
         rectangle.setVisible(false);
         bildAufDemProduktGroup.setVisible(false);
 
         backgroundGroupLinks.getChildren().add(polygonDesProdukts);
 
-        // Funktion mit Poligons Bild
+        /* Bild mit der Maus bewegen und zoomen */
         bildZiehenMitMaus();
         bildZoomen();
-
     }
+
 
     @Override
     public void setFarbe(String farbe) {
@@ -124,7 +115,6 @@ public class PolygonDesProdukt extends Pullower {
             fabricHeight = fabric.getHeight() * currentZoom;
 
             fabricPatternErstellen();
-
         });
     }
 
@@ -150,20 +140,24 @@ public class PolygonDesProdukt extends Pullower {
 
             offsetX = event.getX();
             offsetY = event.getY();
-
         });
     }
 
-    public  void fabricPatternErstellen(){
-        ImagePattern fabricPattern = new ImagePattern(fabric,
-                patternOffsetX, patternOffsetY,               // Position X und Y
-                fabricWidth,   // Width Pattern
-                fabricHeight,  // Height Pattern
-                false);              // false = Bild ist gezeigt, true = kein Bild ist gezeigt
 
-//         🩵 Применяем заливку
+    public  void fabricPatternErstellen(){
+        /* Erstellen des Stoffmusters */
+        ImagePattern fabricPattern = new ImagePattern(
+                fabric,
+                patternOffsetX, patternOffsetY, /* Position X und Y */
+                fabricWidth,                    /* Breite des Musters */
+                fabricHeight,                   /* Höhe des Musters */
+                false                           /* false = Bild wird angezeigt, true = Bild wird nicht angezeigt */
+        );
+
+        /* Stoffmuster auf das Produkt anwenden */
         polygonDesProdukts.setFill(fabricPattern);
     }
+
 
     public Polygon getPolygonDesProdukts() {
         return polygonDesProdukts;

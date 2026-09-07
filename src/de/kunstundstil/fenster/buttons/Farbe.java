@@ -26,7 +26,6 @@ public enum Farbe {
     /** Der String-Name der Farbe */
     private final String farbe;
 
-
     /**
      * Konstruktor für die Enum-Konstanten.
      *
