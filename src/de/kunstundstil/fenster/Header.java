@@ -18,12 +18,12 @@ public class Header {
      * @param headerGroup Die JavaFX-Gruppe, in die der Header-Text eingefügt wird
      */
     public void headerErstellen(String begriff, Group headerGroup){
-        Text text = new Text(begriff);
-        text.setX(500);
-        text.setY(50);
-        text.setFont(Font.font("Verdana", 36));
-        text.setFill(Color.LIMEGREEN);
+        Text titel = new Text(begriff);
+        titel.setX(200);
+        titel.setY(50);
+        titel.setFont(Font.font("Georgia", 36));
+        titel.setFill(Color.web("#2C2520"));
 
-        headerGroup.getChildren().add(text);
+        headerGroup.getChildren().add(titel);
     }
 }

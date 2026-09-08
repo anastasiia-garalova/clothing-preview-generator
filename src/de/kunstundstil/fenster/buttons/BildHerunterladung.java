@@ -33,10 +33,19 @@ public class BildHerunterladung {
      */
     public BildHerunterladung(Stage primaryStage, Group overlayGroup, ImageView bildAufDemProduktView, AtomicReference<ProductGenerator> hauptBody){
 
-        buttonBildUnterladen = new Button("Ein neues Bild herunterladen");
-
-        buttonBildUnterladen.setLayoutX(570);
+        buttonBildUnterladen = new Button("Neues Bild auswählen");
+        buttonBildUnterladen.setLayoutX(550);
         buttonBildUnterladen.setLayoutY(250);
+
+        buttonBildUnterladen.setStyle(
+                "-fx-background-color: #F7F4ED;" +
+                        "-fx-text-fill: #2C2520;" +
+                        "-fx-font-family: 'Arial';" +
+                        "-fx-font-size: 16px;" +
+                        "-fx-letter-spacing: 1px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8 16 8 16;"
+        );
 
         /* Wenn der Button „Bild herunterladen“ geklickt wird */
         buttonBildUnterladen.setOnAction(event -> {

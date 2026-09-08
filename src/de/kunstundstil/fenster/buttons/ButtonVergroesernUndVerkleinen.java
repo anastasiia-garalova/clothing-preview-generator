@@ -26,6 +26,7 @@ public class ButtonVergroesernUndVerkleinen {
      * @param fitZahlFuerVergleichen AtomicInteger, der den aktuellen Grenzwert der Bildgröße speichert
      */
     public void buttonsVergroesernUndVerkleinenErstellen(Group root, ImageView bildAufDemProduktView, AtomicInteger fitZahlFuerVergleichen){
+
         Button vergroessen = new Button("+");
         Button verkleinen = new Button("-");
 
@@ -33,6 +34,27 @@ public class ButtonVergroesernUndVerkleinen {
         vergroessen.setLayoutY(500);
         verkleinen.setLayoutX(260);
         verkleinen.setLayoutY(500);
+
+        vergroessen.setPrefSize(36, 36);
+        verkleinen.setPrefSize(36, 36);
+
+        vergroessen.setStyle(
+                "-fx-background-color: #F7F4ED;" +
+                        "-fx-text-fill: #2C2520;" +
+                        "-fx-font-family: 'Georgia';" +
+                        "-fx-font-size: 20px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 0;"
+        );
+
+        verkleinen.setStyle(
+                "-fx-background-color: #F7F4ED;" +
+                        "-fx-text-fill: #2C2520;" +
+                        "-fx-font-family: 'Georgia';" +
+                        "-fx-font-size: 20px;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 0;"
+        );
 
         Font font = Font.font("Courier New", FontWeight.BOLD, 20);
         vergroessen.setFont(font);
