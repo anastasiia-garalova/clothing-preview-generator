@@ -2,13 +2,9 @@ package de.kunstundstil.produkte;
 
 import de.kunstundstil.pojo.RechteckAufDemProdukt;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -41,10 +37,10 @@ public class BildAufDemProdukt {
     private double offsetY;
 
     /** Das Bild, das auf dem Produkt platziert wird */
-    private Image bildAufDemProdukt;
+    private final Image bildAufDemProdukt;
 
     /** ImageView für das Produktbild */
-    private ImageView bildAufDemProduktView;
+    private final ImageView bildAufDemProduktView;
 
     /**
      * Konstruktor mit Bild und ImageView.
@@ -107,32 +103,13 @@ public class BildAufDemProdukt {
     public void bildLaufenWird(Group overlayGroup, Group bildAufDemProduktGroup, ImageView bildAufDemProduktView, String position,
                                Rectangle rectangle, AtomicInteger fitZahlFuerVergleichen, RechteckAufDemProdukt rechteckAufDemProdukt){
 
-        //positionBild Fuer mic TEST-----------------
-        Text textPositionBild = new Text();
-        textPositionBild.setX(10);
-        textPositionBild.setY(20);
-        textPositionBild.setFill(Color.BLACK);
-        textPositionBild.setFont(Font.font(16));
-        //end
-
         bildAufDemProduktView.setOnMousePressed(mausEvent -> {
             offsetX = mausEvent.getSceneX() - bildAufDemProduktView.getX();
             offsetY = mausEvent.getSceneY() - bildAufDemProduktView.getY();
         });
 
-        // Spaeter werden wir oldWidth und oldHeight des Bilds vergleichen in setOnMouseDragged Methode
-        double oldWidth = bildAufDemProduktView.getBoundsInParent().getWidth();
-        double oldHeight = bildAufDemProduktView.getBoundsInParent().getHeight();
-
-        // Setzen oldWidth und oldHeight
-        AtomicInteger oldWidthObj = new AtomicInteger();
-        oldWidthObj.getAndAdd((int)oldWidth);
-
-        AtomicInteger oldHeightObj = new AtomicInteger();
-        oldHeightObj.getAndAdd((int)oldHeight);
-
         bildAufDemProduktView.setOnMouseDragged(mausEvent -> {
-            /*------------------JPT------------------*/
+
             double newX = mausEvent.getSceneX() - offsetX;
             double newY = mausEvent.getSceneY() - offsetY;
 
@@ -144,30 +121,21 @@ public class BildAufDemProdukt {
             double imgWidth = bildAufDemProduktView.getBoundsInParent().getWidth();
             double imgHeight = bildAufDemProduktView.getBoundsInParent().getHeight();
 
-            // Ограничение по X
             if (newX < rectMinX) newX = rectMinX;
             if (newX + imgWidth > rectMaxX) newX = rectMaxX - imgWidth;
 
-            // Ограничение по Y
             if (newY < rectMinY) newY = rectMinY;
             if (newY + imgHeight > rectMaxY) newY = rectMaxY - imgHeight;
 
             bildAufDemProduktView.setX(newX);
             bildAufDemProduktView.setY(newY);
-            /*-----------end JPT-----------*/
-
         });
-
-
 
         // Überprüft, ob das Objekt bildAufDemProduktView bereits in der Liste enthalten ist
         if (!bildAufDemProduktGroup.getChildren().contains(bildAufDemProduktView)) {
             bildAufDemProduktGroup.getChildren().add(bildAufDemProduktView);
         }
 
-        if (!overlayGroup.getChildren().contains(textPositionBild)) {
-            overlayGroup.getChildren().add(textPositionBild);
-        }
     }
 
 }

@@ -1,4 +1,4 @@
-package de.kunstundstil.test;
+package de.kunstundstil;
 
 import de.kunstundstil.fenster.buttons.*;
 import de.kunstundstil.produkte.ProductGenerator;
@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @see de.kunstundstil.fenster.buttons.ButtonVergroesernUndVerkleinen
  * @see de.kunstundstil.fenster.buttons.ButtonAuswaehlDesProdukts
  */
-public class BildanzeigeAppTest extends Application {
+public class BildanzeigeApp extends Application {
 
     private final Group farbenKreisePanel = new Group();
 

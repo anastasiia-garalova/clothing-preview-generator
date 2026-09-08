@@ -1,7 +1,7 @@
 package de.kunstundstil.polygons;
 
 import de.kunstundstil.pojo.RechteckAufDemProdukt;
-import de.kunstundstil.produkte.Pullower;
+import de.kunstundstil.produkte.Pullover;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,7 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class PolygonDesProdukt extends Pullower {
+public class PolygonDesProdukt extends Pullover {
 
     private Polygon polygonDesProdukts;
     private double offsetX; // Das für bildZiehenMitMaus. Erste PositionX von Maus

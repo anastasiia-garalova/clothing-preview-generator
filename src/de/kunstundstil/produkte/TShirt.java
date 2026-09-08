@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
  * Sie repräsentiert ein T-Shirt-Produkt mit spezifischem Namen und Funktionen.
  * Ermöglicht das Setzen der Farbe, indem das passende Bild geladen wird.
  */
-public class TSchirt extends Produkt{
+public class TShirt extends Produkt{
 
     /** Name des T-Shirts */
     private String name;
@@ -18,7 +18,7 @@ public class TSchirt extends Produkt{
      *
      * @param name Name des T-Shirts
      */
-    public TSchirt(String name) {
+    public TShirt(String name) {
         this.name = name;
     }
 
@@ -26,7 +26,7 @@ public class TSchirt extends Produkt{
      * Standard-Konstruktor.
      * Setzt den Namen auf "TSchirt".
      */
-    public TSchirt() {
+    public TShirt() {
         this.name = "TSchirt";
     }
 

@@ -1,6 +1,5 @@
 package de.kunstundstil.produkte;
 
-import de.kunstundstil.fenster.buttons.ButtonFarbe;
 import de.kunstundstil.pojo.RechteckAufDemProdukt;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -14,7 +13,7 @@ import java.io.IOException;
  * Sie repräsentiert ein Pullover-Produkt mit spezifischen Maßen und Funktionen.
  * Ermöglicht das Erstellen des Pullover-Views und das Setzen der Farbe.
  */
-public class Pullower extends Produkt{
+public class Pullover extends Produkt{
 
     /** Name des Pullover-Produkts */
     private String name;
@@ -24,7 +23,7 @@ public class Pullower extends Produkt{
      *
      * @param name Name des Pullovers
      */
-    public Pullower(String name) {
+    public Pullover(String name) {
         this.name = name;
     }
 
@@ -32,7 +31,7 @@ public class Pullower extends Produkt{
      * Standard-Konstruktor.
      * Setzt den Namen auf "Pullower".
      */
-    public Pullower() {
+    public Pullover() {
         this.name = "Pullower";
     }
 
@@ -61,17 +60,6 @@ public class Pullower extends Produkt{
             rectangle.setHeight(230);
             rechteckAufDemProdukt.setRectangelHeight(230);
         }
-
-        // Optional: Bild clippen, damit es innerhalb des Rechtecks bleibt
-        if(rechteckAufDemProdukt != null){
-            Rectangle clipDasBild = new Rectangle(
-                    rechteckAufDemProdukt.getRectangelX(),
-                    rechteckAufDemProdukt.getRectangelY(),
-                    rechteckAufDemProdukt.getRectangleWidth(),
-                    rechteckAufDemProdukt.getRectangelHeight());
-            bildAufDemProduktView.setClip(clipDasBild);
-        }
-
     }
 
     /**

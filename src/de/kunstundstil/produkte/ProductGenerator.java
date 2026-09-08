@@ -73,16 +73,16 @@ public class ProductGenerator {
         // Создаём новый продукт по имени
         switch (nameDesProdukts) {
             case "TSchirt":
-                produkt = new TSchirt();
+                produkt = new TShirt();
                 break;
             case "Pullower":
-                produkt = new Pullower();
+                produkt = new Pullover();
                 break;
             case "Polygon":
                 produkt = new PolygonDesProdukt();
                 break;
             default:
-                produkt = new TSchirt();
+                produkt = new TShirt();
         }
 
         // Добавляем новый продукт на сцену
