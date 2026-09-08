@@ -35,7 +35,7 @@ public class ProductGenerator {
     private Produkt produkt;
 
     /** Rechteck, das als Clip für das Produktbild dient */
-    private Rectangle rectangle;
+    private final Rectangle rectangle;
 
     /**
      * Konstruktor, der ein Produkt anhand seines Namens erstellt und auf der Szene platziert.
@@ -70,12 +70,8 @@ public class ProductGenerator {
             backgroundGroupLinks.getChildren().remove(produkt.getImageDesProduktsView());
         }
 
-        // Создаём новый продукт по имени
         switch (nameDesProdukts) {
-            case "TSchirt":
-                produkt = new TShirt();
-                break;
-            case "Pullower":
+            case "Pullover":
                 produkt = new Pullover();
                 break;
             case "Polygon":
@@ -85,11 +81,8 @@ public class ProductGenerator {
                 produkt = new TShirt();
         }
 
-        // Добавляем новый продукт на сцену
-
         produkt.produktErstellen(backgroundGroupLinks, overlayGroup, bildAufDemProduktGroup,rectangle, rechteckAufDemProdukt,
                 bildAufDemProduktView, farbenCreisePanel);
-
     }
 
     /** Gibt das Rectangle zurück, das als Clip für das Produktbild verwendet wird */

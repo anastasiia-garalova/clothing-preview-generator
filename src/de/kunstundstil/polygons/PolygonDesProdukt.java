@@ -52,7 +52,7 @@ public class PolygonDesProdukt extends Pullover {
         polygonDesProdukts = new Polygon();
 
         /* Koordinaten des Polygons aus der Datei laden */
-        Path path = Paths.get("resources/polygons/pullower.txt");
+        Path path = Paths.get("resources/polygons/t_shirt1.txt");
         List<String> lines = Files.readAllLines(path);
 
         /* Datei zeilenweise einlesen */
@@ -90,7 +90,7 @@ public class PolygonDesProdukt extends Pullover {
     @Override
     public void setFarbe(String farbe) {
 
-        String pfad = "file:resources/image/pullower/Pullower_" + farbe + ".png";
+        String pfad = "file:resources/image/pullover/Pullover_" + farbe + ".png";
         Image image = new Image(pfad, 400, 400, true, true);
         super.imageDesProduktsView.setImage(image);
     }

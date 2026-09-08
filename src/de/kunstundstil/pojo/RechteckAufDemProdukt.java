@@ -3,7 +3,7 @@ package de.kunstundstil.pojo;
 public class RechteckAufDemProdukt {
     private final int rectangelX;
     private final int rectangelY;
-    private int rectangleWidth;
+    private final int rectangleWidth;
     private int rectangelHeight;
 
     public RechteckAufDemProdukt() {

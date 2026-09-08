@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 
 /**
- * Die Klasse TSchirt erweitert die Klasse Produkt.
+ * Die Klasse TShirt erweitert die Klasse Produkt.
  * Sie repräsentiert ein T-Shirt-Produkt mit spezifischem Namen und Funktionen.
  * Ermöglicht das Setzen der Farbe, indem das passende Bild geladen wird.
  */
@@ -24,10 +24,10 @@ public class TShirt extends Produkt{
 
     /**
      * Standard-Konstruktor.
-     * Setzt den Namen auf "TSchirt".
+     * Setzt den Namen auf "TShirt".
      */
     public TShirt() {
-        this.name = "TSchirt";
+        this.name = "TShirt";
     }
 
     /**
@@ -38,7 +38,7 @@ public class TShirt extends Produkt{
     @Override
     public void setFarbe(String farbe) {
 
-        String pfad = "file:resources/image/tschirt/TSchirt_" + farbe + ".png";
+        String pfad = "file:resources/image/tshirt/TShirt_" + farbe + ".png";
         Image image = new Image(pfad, 400, 400, true, true);
         super.imageDesProduktsView.setImage(image);
     }

@@ -1,5 +1,6 @@
 package de.kunstundstil.fenster.buttons;
 
+import de.kunstundstil.polygons.PolygonDesProdukt;
 import de.kunstundstil.produkte.ProductGenerator;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -67,6 +68,16 @@ public class BildHerunterladung {
                 /* Bild auf dem Produkt anzeigen */
                 bildAufDemProduktView.setImage(bildAufDemProdukt);
 
+                System.out.println("Aktuelles Produkt: " + hauptBody.get().getProdukt());
+                System.out.println("Produkt Klasse: " + hauptBody.get().getProdukt().getClass().getName());
+
+                if (hauptBody.get().getProdukt() instanceof PolygonDesProdukt) {
+
+                    PolygonDesProdukt polygon = (PolygonDesProdukt) hauptBody.get().getProdukt();
+
+                    polygon.setFabric(bildAufDemProdukt);
+                    polygon.fabricPatternErstellen();
+                }
             } else {
                 /* Keine Datei ausgewählt */
                 System.out.println("Keine Datei wurde ausgewählt");

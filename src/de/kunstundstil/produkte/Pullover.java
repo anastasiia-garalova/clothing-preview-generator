@@ -9,7 +9,7 @@ import javafx.scene.shape.Rectangle;
 import java.io.IOException;
 
 /**
- * Die Klasse Pullower erweitert die Klasse Produkt.
+ * Die Klasse Pullover erweitert die Klasse Produkt.
  * Sie repräsentiert ein Pullover-Produkt mit spezifischen Maßen und Funktionen.
  * Ermöglicht das Erstellen des Pullover-Views und das Setzen der Farbe.
  */
@@ -32,7 +32,7 @@ public class Pullover extends Produkt{
      * Setzt den Namen auf "Pullower".
      */
     public Pullover() {
-        this.name = "Pullower";
+        this.name = "Pullover";
     }
 
     /**
@@ -70,7 +70,7 @@ public class Pullover extends Produkt{
     @Override
     public void setFarbe(String farbe) {
 
-        String pfad = "file:resources/image/pullower/Pullower_" + farbe + ".png";
+        String pfad = "file:resources/image/pullover/Pullover_" + farbe + ".png";
         Image image = new Image(pfad, 400, 400, true, true);
         super.imageDesProduktsView.setImage(image);
     }

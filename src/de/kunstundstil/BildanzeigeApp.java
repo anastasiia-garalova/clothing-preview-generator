@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class BildanzeigeApp extends Application {
 
-    private final Group farbenKreisePanel = new Group();
+    //private final Group farbenKreisePanel = new Group();
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -86,10 +86,11 @@ public class BildanzeigeApp extends Application {
 
         /* Aktuelles Produkt über AtomicReference verwalten */
         AtomicReference<ProductGenerator> hauptBody = new AtomicReference<>(new ProductGenerator(backgroundGroup, overlayGroup,
-                bildAufDemProduktGroup, "Pullower", bildAufDemProduktView, farbenKreisePanel));
+                bildAufDemProduktGroup, "Pullover", bildAufDemProduktView, null));
 
         /* Button mit der Farbe des Produkts */
-        new ButtonFarbe(overlayGroup, hauptBody);
+        //new ButtonFarbe(overlayGroup, hauptBody);
+        ButtonFarbe buttonFarbe = new ButtonFarbe(overlayGroup, hauptBody);
 
         /* Funktion zum Hochladen eines neuen Bildes */
         new BildHerunterladung(primaryStage, overlayGroup, bildAufDemProduktView, hauptBody);
@@ -108,7 +109,7 @@ public class BildanzeigeApp extends Application {
 
         /* Produkt auswaehlen, das uns interessiert */
         new ButtonAuswaehlDesProdukts(backgroundGroup,  bildAufDemProduktGroup, overlayGroup, hauptBody,
-                bildAufDemProduktObjekt, bildAufDemProduktView,  position,  fitZahlFuerVergleichen, rechteckAufDemProdukt, farbenKreisePanel);
+                bildAufDemProduktObjekt, bildAufDemProduktView,  position,  fitZahlFuerVergleichen, rechteckAufDemProdukt, buttonFarbe.getFarbenCreisePanel());
 
         /* Gruppe fuer den Snapshot */
         Group snapshotGroup = new Group();

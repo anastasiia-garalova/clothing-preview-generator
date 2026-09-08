@@ -85,9 +85,9 @@ public class ButtonAuswaehlDesProdukts {
         this.fitZahlFuerVergleichen = fitZahlFuerVergleichen;
         this.farbenCreisePanel = farbenCreisePanel;
 
-        Image imageTSchirt = new Image("file:resources/image/tschirt/TSchirt_Weiss.png");
-        Image imagePullower = new Image("file:resources/image/pullower/Pullower_Weiss.png");
-        List<Image> productsImages = new ArrayList<>(List.of(imageTSchirt, imagePullower));
+        Image imageTShirt = new Image("file:resources/image/tshirt/TShirt_Weiss.png");
+        Image imagePullover = new Image("file:resources/image/pullover/Pullover_Weiss.png");
+        List<Image> productsImages = new ArrayList<>(List.of(imageTShirt, imagePullover));
 
         PolygonDesProdukt poligon = new PolygonDesProdukt();
         Polygon poligonDesProdukt = poligon.getPolygonDesProdukts();
@@ -128,7 +128,7 @@ public class ButtonAuswaehlDesProdukts {
 
         Polygon miniPolygonDesProdukts = new Polygon();
 
-        Path path = Paths.get("resources/polygons/pullower.txt");
+        Path path = Paths.get("resources/polygons/pullover.txt");
         List<String> lines = Files.readAllLines(path);
 
         for (String line : lines) { // die Datei wird zeilenweise eingelesen
@@ -160,42 +160,52 @@ public class ButtonAuswaehlDesProdukts {
      *
      * @param miniPolygonDesProdukts Polygon für das anklickbare Produkt
      */
-    private void poligonDesProduktAuswaehlen(Polygon miniPolygonDesProdukts) {
 
-        String produktName = "Pullower";
-        String polygonName = "Polygon";
+    private void poligonDesProduktAuswaehlen(Polygon miniPolygonDesProdukts) {
 
         miniPolygonDesProdukts.setOnMouseClicked(event -> {
 
+            /* Farbauswahl beim Polygon ausblenden */
+            overlayGroup.getChildren().remove(farbenCreisePanel);
+
+            altenProduktEntfernen();
+
             ProductGenerator neuesBody;
-            try {
-                neuesBody = new ProductGenerator(backgroundGroupLinks,
-                        overlayGroup,
-                        bildAufDemProduktGroup,
-                        produktName,
-                        bildAufDemProduktView,
-                        farbenCreisePanel);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
 
             try {
-                new ProductGenerator(backgroundGroupLinks,
+                neuesBody = new ProductGenerator(
+                        backgroundGroupLinks,
                         overlayGroup,
                         bildAufDemProduktGroup,
-                        polygonName,
+                        "Polygon",
                         bildAufDemProduktView,
-                        farbenCreisePanel);
+                        farbenCreisePanel
+                );
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
             hauptBody.set(neuesBody);
+            neuesBody.getRectangle().setVisible(false);
 
+            System.out.println("hauptBody nach Polygon: " + hauptBody.get().getProdukt());
         });
-
     }
 
+    private void altenProduktEntfernen() {
+        if (hauptBody.get() != null && hauptBody.get().getProdukt() != null) {
+
+            ImageView altesProduktBild = hauptBody.get().getProdukt().getImageDesProduktsView();
+
+            if (altesProduktBild != null) {
+                backgroundGroupLinks.getChildren().remove(altesProduktBild);
+            }
+
+            if (hauptBody.get().getRectangle() != null) {
+                backgroundGroupLinks.getChildren().remove(hauptBody.get().getRectangle());
+            }
+        }
+    }
 
     /**
      * Setzt das Verhalten für die Auswahl eines Produktes durch Klick auf die Produktvorschau.
@@ -207,7 +217,7 @@ public class ButtonAuswaehlDesProdukts {
 
         produktView.setOnMouseClicked(event -> {
 
-            overlayGroup.getChildren().remove(farbenCreisePanel);
+
 
             /* ---- Nehmen die Name des Produkts ---- */
 
@@ -230,6 +240,9 @@ public class ButtonAuswaehlDesProdukts {
             String produktName = imagePfad.substring(lastSlash + 1, firstUnderscoreAfterSlash);
 
             ProductGenerator neuerProdukt = null;
+
+            altenProduktEntfernen();
+
             try {
                 neuerProdukt = new ProductGenerator(backgroundGroupLinks, overlayGroup, bildAufDemProduktGroup,
                         produktName, bildAufDemProduktView, farbenCreisePanel);
@@ -238,6 +251,12 @@ public class ButtonAuswaehlDesProdukts {
             }
 
             hauptBody.set(neuerProdukt);
+
+            if (!overlayGroup.getChildren().contains(farbenCreisePanel)) {
+                overlayGroup.getChildren().add(farbenCreisePanel);
+            }
+
+            farbenCreisePanel.toFront();
 
             bildAufDemProduktObj.bildLaufenWird(
                     overlayGroup,                    // In dieser Gruppe alle Buttons steht
